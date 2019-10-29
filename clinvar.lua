@@ -18,5 +18,10 @@ CLNREVSTAT['no_assertion_criteria_provided']='none'
 CLNREVSTAT['no_assertion_provided']='none'
 
 function countGoldStars(reviewStatus)
-    return CLNREVSTAT[reviewStatus]
+    local t=type(reviewStatus)
+    if(t=="string") then
+        return CLNREVSTAT[reviewStatus]
+    else
+        return CLNREVSTAT[table.concat(reviewStatus,",")]
+    end
 end
