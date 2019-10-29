@@ -1,0 +1,51 @@
+[[annotation]]
+file="db/exac/ExAC.r1.sites.vep.vcf.gz"
+fields = [
+	"AC",
+	"AC_EAS",
+	"AC_Hemi",
+	"AC_Het",
+	"AC_Hom",
+	"AN",
+	"AN_EAS",
+	"Hemi_EAS",
+	"Het_EAS",
+	"Hom_EAS",
+	"AF",
+]
+names = [
+	"ExAC_AC",
+	"ExAC_AC_EAS",
+	"ExAC_AC_Hemi",
+	"ExAC_AC_Het",
+	"ExAC_AC_Hom",
+	"ExAC_AN",
+	"ExAC_AN_EAS",
+	"ExAC_Hemi_EAS",
+	"ExAC_Het_EAS",
+	"ExAC_Hom_EAS",
+	"ExAC_AF",
+]
+ops = [
+	"self",
+	"self",
+	"self",
+	"self",
+	"self",
+	"self",
+	"self",
+	"self",
+	"self",
+	"self",
+	"self",
+]
+
+[[postannotation]]
+fields = [
+	"ExAC_AC_EAS",
+	"ExAC_AN_EAS",
+]
+name="ExAC_AF_EAS"
+op="div2"
+type="Float"
+
