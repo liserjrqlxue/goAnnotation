@@ -9,6 +9,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -42,6 +43,11 @@ var (
 	)
 )
 
+// regexp
+var (
+	gzSuffix = regexp.MustCompile(`\.(b)?gz(ip)?$`)
+)
+
 func main() {
 	flag.Parse()
 	if *input == "" || *output == "" {
@@ -68,15 +74,20 @@ func convertAcc(input, output, sep string, k2v map[string]string) {
 	simple_util.CheckErr(err)
 	defer simple_util.DeferClose(file)
 
-	gr, err := gzip.NewReader(file)
-	simple_util.CheckErr(err)
-	defer simple_util.DeferClose(gr)
+	var scanner *bufio.Scanner
+
+	if gzSuffix.MatchString(input) {
+		gr, err := gzip.NewReader(file)
+		simple_util.CheckErr(err)
+		defer simple_util.DeferClose(gr)
+		scanner = bufio.NewScanner(gr)
+	} else {
+		scanner = bufio.NewScanner(file)
+	}
 
 	out, err := os.Create(output)
 	simple_util.CheckErr(err)
 	defer simple_util.DeferClose(out)
-
-	scanner := bufio.NewScanner(gr)
 
 	for scanner.Scan() {
 		line := scanner.Text()
